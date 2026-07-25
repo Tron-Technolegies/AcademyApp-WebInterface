@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+body {
+  background-color: #f7f6fb;
+}
+
+.font-mont {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+.font-kumbh {
+  font-family: "Kumbh Sans", sans-serif;
+}
+
+.font-plus {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.active {
+  color: #c441f4;
+}
