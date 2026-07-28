@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./pages/Layout";
 import ErrorPage from "./pages/ErrorPage";
@@ -9,6 +9,7 @@ import CommunityPage from "./pages/CommunityPage";
 import StudentsPage from "./pages/StudentsPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import { userLoader } from "./loaders/userLoader";
+import LeaderboardPage from "./pages/LeaderboardPage";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,7 @@ export default function App() {
         { index: true, element: <DashboardPage /> },
         { path: "/class", element: <ClassPage /> },
         { path: "/community", element: <CommunityPage /> },
+        { path: "/leaderboard", element: <LeaderboardPage /> },
         { path: "/students", element: <StudentsPage /> },
         { path: "/notifications", element: <NotificationsPage /> },
       ],
