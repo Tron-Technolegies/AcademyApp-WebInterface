@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { GoBell } from "react-icons/go";
 import { UserContext } from "../UserContext";
 
@@ -17,7 +17,10 @@ export default function Header() {
         <NavLink to={"/community"}>Community</NavLink>
       </nav>
       <div className="flex gap-5 items-center">
-        <GoBell size={22} />
+        <Link to={"/notifications"}>
+          <GoBell size={22} />
+        </Link>
+
         <div className="flex gap-2 items-center font-plus">
           {user?.profilePicUrl ? (
             <img

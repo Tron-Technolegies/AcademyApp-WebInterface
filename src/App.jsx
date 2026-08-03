@@ -10,6 +10,7 @@ import StudentsPage from "./pages/StudentsPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import { userLoader } from "./loaders/userLoader";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import AddClass from "./pages/AddClass";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,7 @@ export default function App() {
       children: [
         { index: true, element: <DashboardPage /> },
         { path: "/class", element: <ClassPage /> },
+        { path: "/class/add", element: <AddClass /> },
         { path: "/community", element: <CommunityPage /> },
         { path: "/leaderboard", element: <LeaderboardPage /> },
         { path: "/students", element: <StudentsPage /> },
