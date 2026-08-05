@@ -4,8 +4,11 @@ import { api } from "../../api/api";
 export const userLoader = async () => {
   try {
     const response = await api.get("/user/userInfo");
-    const user = response.data;
+    const user = response.data.user;
     if (!user) {
+      throw new Error("No Access");
+    }
+    if (!["teacher", "student"].includes(user.role)) {
       throw new Error("No Access");
     }
     return user;
