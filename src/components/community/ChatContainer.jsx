@@ -62,7 +62,7 @@ export default function ChatContainer({ active }) {
           </>
         )}
       </div>
-      <ChatSection />
+      <ChatSection chatRoom={selectedChatRoom} />
     </div>
   );
 }
