@@ -32,6 +32,10 @@ export const useChatSocket = ({ chatRoomId, user }) => {
     socket.on("receiveMessage", handleReceiveMessage);
     socket.on("error", handleError);
 
+    // ✅ if the socket is already connected (common now that ChatContainer
+    // connects it early for subscribeRooms), fire join manually
+    if (socket.connected) handleConnect();
+
     return () => {
       socket.off("connect", handleConnect);
       socket.off("previousMessages", handlePreviousMessages);
@@ -56,7 +60,7 @@ export const useChatSocket = ({ chatRoomId, user }) => {
 
   const sendText = useCallback(
     (message) => {
-      if (!message.trim() || chatRoomId) return;
+      if (!message.trim() || !chatRoomId) return;
       socket.emit("sendMessage", { chatRoomId, user: user?._id, message });
     },
     [chatRoomId, user?._id],

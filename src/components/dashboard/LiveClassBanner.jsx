@@ -4,28 +4,28 @@ import { IoVideocamOutline } from "react-icons/io5";
 export default function LiveClassBanner() {
   const hasLiveClass = true;
   return (
-    <div className="bg-[#F4E1FD] p-5 rounded w-full flex justify-around items-center font-mont">
+    <div className="bg-[#F4E1FD] p-6 rounded-2xl w-full flex flex-col md:flex-row gap-5 justify-around items-center font-mont text-center md:text-left">
       {hasLiveClass ? (
         <>
-          <div>
-            <p className="text-sm font-medium">Next</p>
-            <p className="text-[#C441F4] text-xl font-semibold">Live Class</p>
+          <div className="flex flex-col items-center md:items-start">
+            <p className="text-xs md:text-sm font-medium uppercase tracking-wider text-[#4F4F4F]">Next</p>
+            <p className="text-[#C441F4] text-lg md:text-xl font-semibold">Live Class</p>
           </div>
-          <div>
-            <p className="text-lg font-semibold">React State Management</p>
-            <p className="text-xs">
+          <div className="flex flex-col items-center md:items-start">
+            <p className="text-base md:text-lg font-semibold">React State Management</p>
+            <p className="text-xs text-gray-600">
               Describes about the state management in React
             </p>
           </div>
-          <button className="bg-white p-2 px-4 rounded-lg text-[#C441F4] flex gap-3 font-semibold">
+          <button className="bg-white p-2 px-4 rounded-xl text-[#C441F4] flex gap-3 font-semibold items-center shadow-sm hover:shadow transition">
             <IoVideocamOutline size={24} />
             Join Now
           </button>
         </>
       ) : (
         <>
-          <p className="text-lg font-semibold">No Live classes scheduled</p>
-          <button className="bg-white p-2 px-4 rounded-lg text-[#C441F4] flex gap-3 font-semibold">
+          <p className="text-base md:text-lg font-semibold">No Live classes scheduled</p>
+          <button className="bg-white p-2 px-4 rounded-xl text-[#C441F4] flex gap-3 font-semibold items-center shadow-sm hover:shadow transition">
             Schedule Now
           </button>
         </>

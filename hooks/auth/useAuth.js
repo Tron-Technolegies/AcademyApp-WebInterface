@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -38,4 +38,28 @@ export const useGetUserInfo = () => {
     },
   });
   return { isError, isLoading, data };
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async () => {
+      await api.post("/auth/logout");
+    },
+    onSuccess: () => {
+      queryClient.clear();
+      toast.success("Successfully Logged In");
+      navigate("/login");
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.message ||
+          error.response.data.msg ||
+          "something went wrong. please try again",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
 };

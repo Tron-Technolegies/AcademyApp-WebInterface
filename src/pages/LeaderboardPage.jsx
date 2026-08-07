@@ -15,11 +15,12 @@ export default function LeaderboardPage() {
         <p className="text-[#252525]">Leaderboard</p>
       </div>
       <LeaderBoardSelector />
-      <div className="flex gap-7 justify-between items-start">
+      <div className="flex flex-col lg:flex-row gap-7 justify-between items-start">
         <LeaderboardTop3 page />
         <div className="w-full flex flex-col gap-2">
-          {Array.from({ length: 7 }).map((item) => (
+          {Array.from({ length: 7 }).map((_, item) => (
             <LeaderboardCard
+              key={item}
               student={{ firstName: "Student", rank: 4, points: 900 }}
             />
           ))}

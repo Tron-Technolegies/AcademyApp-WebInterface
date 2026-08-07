@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../api/api";
+import { toast } from "react-toastify";
 
 export const useGetAllCommunities = () => {
   const { isLoading, error, data } = useQuery({
@@ -21,6 +22,7 @@ export const useGetSubcommunityByCommunity = ({ id }) => {
       });
       return data;
     },
+    enabled: !!id,
   });
   return { isLoading, error, data };
 };
@@ -34,6 +36,29 @@ export const useGetChatRoomsBySubCommunity = ({ id }) => {
       });
       return data;
     },
+    enabled: !!id,
   });
   return { isLoading, error, data };
+};
+
+export const useJoinCommunity = () => {
+  const queryClient = useQueryClient();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (communityId) => {
+      await api.post("/community/joinCommunity", { communityId });
+    },
+    onSuccess: () => {
+      toast.success("Joined Community");
+      queryClient.invalidateQueries({ queryKey: ["community"] });
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.message ||
+          error.response.data.msg ||
+          "something went wrong. please try again",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
 };

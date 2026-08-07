@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../api/api";
+import { useCallback } from "react";
 
 export const useUnreadCounts = ({ userId, chatRoomIds }) => {
   const queryClient = useQueryClient();
@@ -15,19 +16,25 @@ export const useUnreadCounts = ({ userId, chatRoomIds }) => {
     enabled: !!userId && !!chatRoomIds?.length,
   });
 
-  const bumpUnread = (chatRoomId) => {
-    queryClient.setQueryData(key, (prev) => ({
-      ...prev,
-      [chatRoomId]: (prev?.[chatRoomId] || 0) + 1,
-    }));
-  };
+  const bumpUnread = useCallback(
+    (chatRoomId) => {
+      queryClient.setQueryData(key, (prev) => ({
+        ...prev,
+        [chatRoomId]: (prev?.[chatRoomId] || 0) + 1,
+      }));
+    },
+    [queryClient, userId, chatRoomIds.join(",")],
+  );
 
-  const clearUnread = (chatRoomId) => {
-    queryClient.setQueryData(key, (prev) => ({
-      ...prev,
-      [chatRoomId]: 0,
-    }));
-  };
+  const clearUnread = useCallback(
+    (chatRoomId) => {
+      queryClient.setQueryData(key, (prev) => ({
+        ...prev,
+        [chatRoomId]: 0,
+      }));
+    },
+    [queryClient, userId, chatRoomIds.join(",")],
+  );
 
   return {
     unreadCounts: data || {},
