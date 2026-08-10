@@ -69,7 +69,10 @@ const rows = [
   },
 ];
 
-export default function StudentsTable() {
+export default function StudentsTable({ isLoading, data, error }) {
+  if (isLoading) {
+    return <p>Loading....</p>;
+  }
   return (
     <TableContainer>
       <Table
@@ -100,7 +103,8 @@ export default function StudentsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data?.students?.length < 1 && <p>No students</p>}
+          {data?.students?.map((row) => (
             <TableRow
               key={row.id}
               sx={{
@@ -122,8 +126,8 @@ export default function StudentsTable() {
                 },
               }}
             >
-              <TableCell align="center">{row.first_name}</TableCell>
-              <TableCell align="center">{row.phone}</TableCell>
+              <TableCell align="center">{row.firstName}</TableCell>
+              <TableCell align="center">{row.phoneNumber}</TableCell>
               <TableCell align="center">{row.email}</TableCell>
             </TableRow>
           ))}

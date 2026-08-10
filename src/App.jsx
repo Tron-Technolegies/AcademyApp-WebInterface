@@ -11,6 +11,7 @@ import NotificationsPage from "./pages/NotificationsPage";
 import { userLoader } from "./loaders/userLoader";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import AddClass from "./pages/AddClass";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -30,6 +31,7 @@ export default function App() {
       ],
     },
     { path: "/login", element: <LoginPage /> },
+    { path: "/forgot-password", element: <ForgotPassword /> },
   ]);
   return <RouterProvider router={router} />;
 }

@@ -11,20 +11,57 @@ export default function Header() {
   const { isPending, mutateAsync } = useLogout();
   return (
     <header className="relative md:px-25 px-5 py-3 h-20 bg-[#F4E1FD70] rounded-b-[30px] md:rounded-b-[50px] flex justify-between items-center">
-      <img src="/logo2.png" alt="Logo" className="object-cover h-10 md:h-auto" />
-      
+      <img
+        src="/logo2.png"
+        alt="Logo"
+        className="object-cover h-10 md:h-auto"
+      />
+
       {/* Desktop Navigation */}
       <nav className="hidden md:flex gap-4 items-center font-kumbh text-[#4F4F4F] font-medium">
-        <NavLink to={"/"} className={({ isActive }) => isActive ? "text-[#C441F4] font-semibold" : ""}>
+        <NavLink
+          to={"/"}
+          className={({ isActive }) =>
+            isActive ? "text-[#C441F4] font-semibold" : ""
+          }
+        >
           Dashboard
         </NavLink>
-        <NavLink to={"/students"} className={({ isActive }) => isActive ? "text-[#C441F4] font-semibold" : ""}>Students</NavLink>
-        <NavLink to={"/class"} className={({ isActive }) => isActive ? "text-[#C441F4] font-semibold" : ""}>Class</NavLink>
-        <NavLink to={"/community"} className={({ isActive }) => isActive ? "text-[#C441F4] font-semibold" : ""}>Community</NavLink>
+        {user?.role === "teacher" && (
+          <>
+            <NavLink
+              to={"/students"}
+              className={({ isActive }) =>
+                isActive ? "text-[#C441F4] font-semibold" : ""
+              }
+            >
+              Students
+            </NavLink>
+            <NavLink
+              to={"/class"}
+              className={({ isActive }) =>
+                isActive ? "text-[#C441F4] font-semibold" : ""
+              }
+            >
+              Class
+            </NavLink>
+            <NavLink
+              to={"/community"}
+              className={({ isActive }) =>
+                isActive ? "text-[#C441F4] font-semibold" : ""
+              }
+            >
+              Community
+            </NavLink>
+          </>
+        )}
       </nav>
 
       <div className="flex gap-3 md:gap-5 items-center">
-        <Link to={"/notifications"} className="text-[#4F4F4F] hover:text-[#C441F4]">
+        <Link
+          to={"/notifications"}
+          className="text-[#4F4F4F] hover:text-[#C441F4]"
+        >
           <GoBell size={22} />
         </Link>
 
@@ -81,11 +118,26 @@ export default function Header() {
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           className="md:hidden flex items-center justify-center p-2 rounded-xl text-[#4F4F4F] bg-white/80 border border-[#D8B4FE] shadow-sm hover:shadow-md"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             {isMobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             )}
           </svg>
         </button>
@@ -98,28 +150,36 @@ export default function Header() {
             <NavLink
               to={"/"}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) => `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`}
+              className={({ isActive }) =>
+                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+              }
             >
               Dashboard
             </NavLink>
             <NavLink
               to={"/students"}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) => `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`}
+              className={({ isActive }) =>
+                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+              }
             >
               Students
             </NavLink>
             <NavLink
               to={"/class"}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) => `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`}
+              className={({ isActive }) =>
+                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+              }
             >
               Class
             </NavLink>
             <NavLink
               to={"/community"}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) => `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`}
+              className={({ isActive }) =>
+                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+              }
             >
               Community
             </NavLink>
@@ -127,7 +187,11 @@ export default function Header() {
           <hr className="border-[#F4E1FD]" />
           <div className="flex items-center gap-3 px-3 py-2">
             {user?.profilePicUrl ? (
-              <img src={user.profilePicUrl} className="w-10 h-10 rounded-full object-cover" alt="profile" />
+              <img
+                src={user.profilePicUrl}
+                className="w-10 h-10 rounded-full object-cover"
+                alt="profile"
+              />
             ) : (
               <div className="w-10 h-10 bg-[#904CC8] rounded-full flex text-white items-center justify-center font-bold">
                 {user?.email?.slice(0, 1)?.toUpperCase() || "U"}
@@ -135,7 +199,9 @@ export default function Header() {
             )}
             <div className="flex flex-col">
               <p className="font-semibold text-sm text-[#4F4F4F]">
-                {user?.firstName || user?.instructorDetails?.instructorName || "User"}
+                {user?.firstName ||
+                  user?.instructorDetails?.instructorName ||
+                  "User"}
               </p>
               <p className="text-xs text-[#6B7280]">{user?.email || ""}</p>
             </div>

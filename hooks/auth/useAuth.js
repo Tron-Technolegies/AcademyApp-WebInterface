@@ -63,3 +63,25 @@ export const useLogout = () => {
   });
   return { isPending, mutateAsync };
 };
+
+export const useForgotPassword = () => {
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (data) => {
+      await api.post("/auth/forgotPassword", data);
+    },
+    onSuccess: () => {
+      toast.success("A verification mail has been send to you");
+      navigate("/login");
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.message ||
+          error.response.data.msg ||
+          "something went wrong. please try again",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};
