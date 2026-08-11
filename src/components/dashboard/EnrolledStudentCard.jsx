@@ -2,7 +2,7 @@ import React from "react";
 
 export default function EnrolledStudentCard({ student }) {
   return (
-    <div className="bg-white p-5 rounded-xl font-plus flex justify-around items-center">
+    <div className="bg-white md:px-15 p-5 rounded-xl font-plus flex justify-between items-center">
       <div className="flex gap-3 items-center">
         {student.profilePicUrl ? (
           <img
@@ -18,8 +18,10 @@ export default function EnrolledStudentCard({ student }) {
         <p>{student.firstName}</p>
       </div>
       <div>
-        <p className="text-lg font-semibold">{student.course}</p>
-        <p className="text-xs font-light">{student.category}</p>
+        <p className="text-lg font-semibold">
+          {student.courses[0]?.courseName}
+        </p>
+        {/* <p className="text-xs font-light">{student.category}</p> */}
       </div>
     </div>
   );

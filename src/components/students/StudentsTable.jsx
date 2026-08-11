@@ -5,73 +5,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-const rows = [
-  {
-    id: 1,
-    first_name: "Tildi",
-    email: "toconcannon0@weather.com",
-    phone: "204 762 5262",
-  },
-  {
-    id: 2,
-    first_name: "Lorens",
-    email: "lflorentine1@cdbaby.com",
-    phone: "119 181 7555",
-  },
-  {
-    id: 3,
-    first_name: "Nanci",
-    email: "ngideon2@acquirethisname.com",
-    phone: "489 317 6638",
-  },
-  {
-    id: 4,
-    first_name: "Lodovico",
-    email: "lende3@yahoo.com",
-    phone: "498 266 5817",
-  },
-  {
-    id: 5,
-    first_name: "Blaine",
-    email: "brisley4@sohu.com",
-    phone: "671 120 2565",
-  },
-  {
-    id: 6,
-    first_name: "Miguelita",
-    email: "mmatteuzzi5@reuters.com",
-    phone: "715 638 1208",
-  },
-  {
-    id: 7,
-    first_name: "Jerrie",
-    email: "jsurgeoner6@diigo.com",
-    phone: "915 595 4620",
-  },
-  {
-    id: 8,
-    first_name: "Drona",
-    email: "dbezant7@vk.com",
-    phone: "764 679 1538",
-  },
-  {
-    id: 9,
-    first_name: "Juliane",
-    email: "jcowherd8@hao123.com",
-    phone: "305 462 4613",
-  },
-  {
-    id: 10,
-    first_name: "Ninon",
-    email: "nalison9@sciencedirect.com",
-    phone: "984 521 3065",
-  },
-];
+import Loading from "../Loading";
 
 export default function StudentsTable({ isLoading, data, error }) {
   if (isLoading) {
-    return <p>Loading....</p>;
+    return <Loading />;
   }
   return (
     <TableContainer>

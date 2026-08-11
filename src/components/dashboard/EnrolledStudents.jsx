@@ -1,6 +1,8 @@
 import React from "react";
 import EnrolledStudentCard from "./EnrolledStudentCard";
 import { Link } from "react-router-dom";
+import { useGetEnrolled } from "../../../hooks/students/useGetEnrolled";
+import Loading from "../Loading";
 
 const student = {
   profilePicUrl: "",
@@ -10,6 +12,10 @@ const student = {
 };
 
 export default function EnrolledStudents() {
+  const { isLoading, data, error } = useGetEnrolled({
+    currentPage: 1,
+    search: "",
+  });
   return (
     <div className="w-full font-mont">
       <div className="flex justify-between">
@@ -22,8 +28,10 @@ export default function EnrolledStudents() {
         </Link>
       </div>
       <div className="flex flex-col gap-2 my-5">
-        {Array.from({ length: 4 }, (_, i) => i).map((item) => (
-          <EnrolledStudentCard key={item} student={student} />
+        {isLoading && <Loading />}
+        {data?.students?.length < 1 && <p>No Enrolled Students</p>}
+        {data?.students?.slice(0, 4)?.map((item) => (
+          <EnrolledStudentCard key={item._id} student={item} />
         ))}
       </div>
     </div>
