@@ -1,7 +1,9 @@
 import React from "react";
 import UpcomingCard from "./UpcomingCard";
+import { useGetAllClassesOfStudent } from "../../../hooks/class/useClass";
 
 export default function StudentDashboardSection() {
+  const {} = useGetAllClassesOfStudent({ currentPage: 1 });
   return (
     <div className="my-7">
       <p className="text-lg font-semibold font-mont capitalize">

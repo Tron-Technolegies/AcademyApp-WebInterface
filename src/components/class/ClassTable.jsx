@@ -108,6 +108,7 @@ export default function ClassTable() {
               <TableCell align="center">Date</TableCell>
               <TableCell align="center">Time</TableCell>
               <TableCell align="center">Class</TableCell>
+              <TableCell align="center">Course</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -125,9 +126,12 @@ export default function ClassTable() {
                   background: "#F7F6FB",
                 }}
               >
-                <TableCell align="center">{row.date}</TableCell>
+                <TableCell align="center">
+                  {row.date && new Date(row.date).toDateString()}
+                </TableCell>
                 <TableCell align="center">{row.time}</TableCell>
-                <TableCell align="center">{row.class}</TableCell>
+                <TableCell align="center">{row.className}</TableCell>
+                <TableCell align="center">{row.course?.courseName}</TableCell>
                 <TableCell
                   align="center"
                   sx={{ display: "flex", justifyContent: "center" }}

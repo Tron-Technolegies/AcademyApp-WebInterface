@@ -2,11 +2,15 @@ import React, { useContext, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import DateTimePickerComp from "../components/class/DateTimePickerComp";
-import { useGetCoursesByInstructor } from "../../hooks/class/useClass";
+import {
+  useAddClass,
+  useGetCoursesByInstructor,
+} from "../../hooks/class/useClass";
 import { UserContext } from "../UserContext";
 
 export default function AddClass() {
   const { data } = useGetCoursesByInstructor();
+  const { isPending, mutateAsync } = useAddClass();
 
   const { user } = useContext(UserContext);
 
@@ -16,7 +20,8 @@ export default function AddClass() {
     const classData = Object.fromEntries(formdata);
     classData.instructor = user?._id;
     classData.time = classData?.date?.split("T")[1];
-    console.log(classData);
+    await mutateAsync(classData);
+    e.target.reset();
   }
   return (
     <div className="flex flex-col gap-5 font-mont">
@@ -86,10 +91,11 @@ export default function AddClass() {
             />
           </div>
           <button
+            disabled={isPending}
             className="bg-[#424242] px-7 cursor-pointer hover:bg-black py-2 rounded-lg w-fit text-white self-end transition"
             type="submit"
           >
-            Save
+            {isPending ? "Saving..." : "Save"}
           </button>
         </div>
       </form>

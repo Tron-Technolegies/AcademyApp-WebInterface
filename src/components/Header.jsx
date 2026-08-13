@@ -55,6 +55,18 @@ export default function Header() {
             </NavLink>
           </>
         )}
+        {user?.role === "student" && (
+          <>
+            <NavLink
+              to={"/enrolled"}
+              className={({ isActive }) =>
+                isActive ? "text-[#C441F4] font-semibold" : ""
+              }
+            >
+              My Courses
+            </NavLink>
+          </>
+        )}
       </nav>
 
       <div className="flex gap-3 md:gap-5 items-center">
@@ -156,33 +168,51 @@ export default function Header() {
             >
               Dashboard
             </NavLink>
-            <NavLink
-              to={"/students"}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
-              }
-            >
-              Students
-            </NavLink>
-            <NavLink
-              to={"/class"}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
-              }
-            >
-              Class
-            </NavLink>
-            <NavLink
-              to={"/community"}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
-              }
-            >
-              Community
-            </NavLink>
+            {user?.role === "teacher" && (
+              <>
+                {" "}
+                <NavLink
+                  to={"/students"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+                  }
+                >
+                  Students
+                </NavLink>
+                <NavLink
+                  to={"/class"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+                  }
+                >
+                  Class
+                </NavLink>
+                <NavLink
+                  to={"/community"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+                  }
+                >
+                  Community
+                </NavLink>
+              </>
+            )}
+            {user?.role === "student" && (
+              <>
+                <NavLink
+                  to={"/enrolled"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `py-2 px-3 rounded-lg ${isActive ? "text-[#C441F4] bg-[#F4E1FD40] font-semibold" : ""}`
+                  }
+                >
+                  My Courses
+                </NavLink>
+              </>
+            )}
           </nav>
           <hr className="border-[#F4E1FD]" />
           <div className="flex items-center gap-3 px-3 py-2">

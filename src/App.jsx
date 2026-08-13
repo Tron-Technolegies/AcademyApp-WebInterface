@@ -12,6 +12,7 @@ import { userLoader } from "./loaders/userLoader";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import AddClass from "./pages/AddClass";
 import ForgotPassword from "./pages/ForgotPassword";
+import MyCourses from "./pages/MyCourses";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,7 @@ export default function App() {
         { path: "/leaderboard", element: <LeaderboardPage /> },
         { path: "/students", element: <StudentsPage /> },
         { path: "/notifications", element: <NotificationsPage /> },
+        { path: "/enrolled", element: <MyCourses /> },
       ],
     },
     { path: "/login", element: <LoginPage /> },
