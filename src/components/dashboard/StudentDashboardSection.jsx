@@ -3,8 +3,10 @@ import UpcomingCard from "./UpcomingCard";
 import { useGetAllClassesOfStudent } from "../../../hooks/class/useClass";
 import Loading from "../Loading";
 import LiveBannerStudent from "./LiveBannerStudent";
+import { useNavigate } from "react-router-dom";
 
 export default function StudentDashboardSection() {
+  const navigate = useNavigate();
   const { isLoading, data } = useGetAllClassesOfStudent({ currentPage: 1 });
   return (
     <div className="my-7">
@@ -21,6 +23,7 @@ export default function StudentDashboardSection() {
             <UpcomingCard
               key={item._id}
               course={item?.course?.courseName}
+              onCtaClick={() => navigate(`/class/join/${item._id}`)}
               title={item.className}
               eyebrow={new Date(item?.date)?.toDateString()}
               hostAvatar={item.instructor?.profilePicUrl}

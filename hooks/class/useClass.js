@@ -85,3 +85,25 @@ export const useStartClass = () => {
   });
   return { isPending, mutateAsync };
 };
+
+export const useEndClass = () => {
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      await api.post(`/class/endClass/${id}`);
+    },
+    onSuccess: (data, id) => {
+      toast.success("Class Ended Successfully");
+      navigate(`/class`);
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.msg ||
+          error.response.data.message ||
+          "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};

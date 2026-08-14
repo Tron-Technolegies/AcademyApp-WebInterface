@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useAgoraClass } from "../../../hooks/class/useAgoraClass";
 import PreJoinSetup from "./PreJoinSetup";
 import { Mic, MicOff, Video, VideoOff } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../UserContext";
+import { useEndClass } from "../../../hooks/class/useClass";
 
 export default function LiveClassRoom() {
   const { classId } = useParams();
+  const { user } = useContext(UserContext);
+  const { isPending, mutateAsync } = useEndClass();
   const {
     status,
     error,
@@ -94,12 +98,26 @@ export default function LiveClassRoom() {
         <button onClick={handleToggleVideo} className="p-2 rounded border">
           {videoOn ? <Video size={18} /> : <VideoOff size={18} />}
         </button>
-        <button
-          onClick={leave}
-          className="ml-auto px-4 py-2 rounded bg-red-600 text-white"
-        >
-          Leave Class
-        </button>
+        <div className="ml-auto flex gap-2 items-center">
+          {user?.role === "teacher" && (
+            <button
+              onClick={async () => {
+                await mutateAsync(classId);
+                leave();
+              }}
+              disabled={isPending}
+              className=" px-4 py-2 rounded bg-red-600 text-white"
+            >
+              End Class
+            </button>
+          )}
+          <button
+            onClick={leave}
+            className=" px-4 py-2 rounded bg-red-600 text-white"
+          >
+            Leave Class
+          </button>
+        </div>
       </div>
     </div>
   );
