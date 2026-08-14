@@ -21,7 +21,7 @@ export default function App() {
       path: "/",
       element: <Layout />,
       errorElement: <ErrorPage />,
-      // loader: userLoader,
+      loader: userLoader,
       children: [
         { index: true, element: <DashboardPage /> },
         { path: "/class", element: <ClassPage /> },
