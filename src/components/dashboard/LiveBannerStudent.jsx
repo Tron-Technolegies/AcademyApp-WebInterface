@@ -1,25 +1,11 @@
 import React from "react";
-import { IoVideocamOutline } from "react-icons/io5";
-import {
-  useGetAllInstructorClasses,
-  useStartClass,
-} from "../../../hooks/class/useClass";
+import { useGetAllClassesOfStudent } from "../../../hooks/class/useClass";
 import Loading from "../Loading";
+import { IoVideocamOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-export default function LiveClassBanner() {
-  const { isLoading, data } = useGetAllInstructorClasses({
-    currentPage: 1,
-    search: "",
-  });
-
+export default function LiveBannerStudent({ isLoading, data }) {
   const latestClass = data?.classes?.[0] || null;
-
-  const { isPending, mutateAsync } = useStartClass();
-
-  async function handleStart() {
-    await mutateAsync(latestClass?._id);
-  }
 
   if (isLoading) {
     return <Loading />;
@@ -42,26 +28,25 @@ export default function LiveClassBanner() {
             </p>
             <p className="text-xs text-gray-600">{latestClass.notes}</p>
           </div>
-          <button
-            onClick={handleStart}
-            disabled={isPending}
-            className="bg-white p-2 px-4 cursor-pointer rounded-xl text-[#C441F4] flex gap-3 font-semibold items-center shadow-sm hover:shadow transition"
+          <Link
+            to={`/class/join/${latestClass._id}`}
+            className="bg-white p-2 px-4 rounded-xl text-[#C441F4] flex gap-3 font-semibold items-center shadow-sm hover:shadow transition"
           >
             <IoVideocamOutline size={24} />
-            {isPending ? "Starting...." : "Start Now"}
-          </button>
+            Join Now
+          </Link>
         </>
       ) : (
         <>
           <p className="text-base md:text-lg font-semibold">
             No Live classes scheduled
           </p>
-          <Link
+          {/* <Link
             to={"/class/add"}
             className="bg-white p-2 px-4 rounded-xl text-[#C441F4] flex gap-3 font-semibold items-center shadow-sm hover:shadow transition"
           >
             Schedule Now
-          </Link>
+          </Link> */}
         </>
       )}
     </div>

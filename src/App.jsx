@@ -13,6 +13,7 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import AddClass from "./pages/AddClass";
 import ForgotPassword from "./pages/ForgotPassword";
 import MyCourses from "./pages/MyCourses";
+import LiveClassRoom from "./components/class/LiveClassRoom";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,7 @@ export default function App() {
         { index: true, element: <DashboardPage /> },
         { path: "/class", element: <ClassPage /> },
         { path: "/class/add", element: <AddClass /> },
+        { path: "/class/join/:classId", element: <LiveClassRoom /> },
         { path: "/community", element: <CommunityPage /> },
         { path: "/leaderboard", element: <LeaderboardPage /> },
         { path: "/students", element: <StudentsPage /> },

@@ -63,3 +63,25 @@ export const useGetAllClassesOfStudent = ({ currentPage }) => {
   });
   return { isLoading, data, error };
 };
+
+export const useStartClass = () => {
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      await api.post(`/class/startClass/${id}`);
+    },
+    onSuccess: (data, id) => {
+      toast.success("Class started Successfully");
+      navigate(`/class/join/${id}`);
+    },
+    onError: (error) => {
+      toast.error(
+        error.response.data.error ||
+          error.response.data.msg ||
+          error.response.data.message ||
+          "something went wrong",
+      );
+    },
+  });
+  return { isPending, mutateAsync };
+};

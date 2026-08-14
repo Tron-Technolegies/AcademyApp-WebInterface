@@ -4,9 +4,10 @@ import { Play } from "lucide-react";
 export default function UpcomingCard({
   eyebrow = "Part 2",
   title = "User Experience Class",
-  hostAvatar = "🧑‍🎨",
+  hostAvatar,
   hostName = "Shahma",
-  ctaLabel = "Notify me",
+  ctaLabel = "Join Now",
+  course,
   onCtaClick,
   onPlayClick,
   className = "",
@@ -33,11 +34,18 @@ export default function UpcomingCard({
             {title}
           </h3>
           <div className="mt-2 flex items-center gap-1.5">
-            <span className="text-sm leading-none">{hostAvatar}</span>
+            {hostAvatar && (
+              <img
+                src={hostAvatar}
+                alt={hostName}
+                className="w-10 h-10  object-cover rounded-full leading-none"
+              ></img>
+            )}
             <span className="text-sm font-medium text-violet-600">
               {hostName}
             </span>
           </div>
+          <p className="text-sm font-bold ">{course?.toUpperCase()}</p>
         </div>
       </div>
 

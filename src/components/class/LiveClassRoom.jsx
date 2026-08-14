@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAgoraClass } from "../../../hooks/class/useAgoraClass";
 import PreJoinSetup from "./PreJoinSetup";
 import { Mic, MicOff, Video, VideoOff } from "lucide-react";
+import { useParams } from "react-router-dom";
 
-export default function LiveClassRoom({ classId }) {
+export default function LiveClassRoom() {
+  const { classId } = useParams();
   const {
     status,
     error,
