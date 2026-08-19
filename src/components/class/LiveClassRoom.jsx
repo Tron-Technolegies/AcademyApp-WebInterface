@@ -1,7 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useAgoraClass } from "../../../hooks/class/useAgoraClass";
 import PreJoinSetup from "./PreJoinSetup";
-import { Mic, MicOff, Video, VideoOff } from "lucide-react";
+import {
+  Maximize,
+  Mic,
+  MicOff,
+  Minimize,
+  MonitorUp,
+  MonitorX,
+  Video,
+  VideoOff,
+} from "lucide-react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEndClass } from "../../../hooks/class/useClass";
