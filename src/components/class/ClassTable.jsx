@@ -7,7 +7,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { MdDelete } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { useGetAllInstructorClasses } from "../../../hooks/class/useClass";
+import {
+  useGetAllInstructorClasses,
+  useStartClass,
+} from "../../../hooks/class/useClass";
 import Loading from "../Loading";
 import Pagination from "@mui/material/Pagination";
 
@@ -19,6 +22,12 @@ export default function ClassTable() {
     currentPage,
     search: debounced,
   });
+
+  const { isPending, mutateAsync } = useStartClass();
+
+  async function handleStart(id) {
+    await mutateAsync(id);
+  }
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -77,9 +86,23 @@ export default function ClassTable() {
                 <TableCell align="center">{row.course?.courseName}</TableCell>
                 <TableCell
                   align="center"
-                  sx={{ display: "flex", justifyContent: "center" }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "12px",
+                  }}
                 >
-                  <MdDelete />
+                  <button
+                    disabled={isPending}
+                    onClick={() => handleStart(row._id)}
+                    className="p-2 bg-gray-200 text-xs rounded-md"
+                  >
+                    {isPending ? "Starting..." : "Start"}
+                  </button>
+                  {/* <button className="p-2 bg-gray-200 text-xs rounded-md">
+                    <MdDelete />
+                  </button> */}
                 </TableCell>
               </TableRow>
             ))}

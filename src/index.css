@@ -6,6 +6,9 @@ body {
   color: black;
 }
 
+button {
+  cursor: pointer;
+}
 .font-mont {
   font-family: "Montserrat", sans-serif;
 }
