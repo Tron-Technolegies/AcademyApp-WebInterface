@@ -7,9 +7,71 @@ export const useAgoraClass = (classId) => {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const [remoteUsers, setRemoteUsers] = useState([]);
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
 
+  const screenTrackRef = useRef(null);
   const clientRef = useRef(null);
   const localTracksRef = useRef({ audio: null, video: null });
+
+  const startScreenShare = useCallback(async () => {
+    if (isScreenSharing) return;
+    try {
+      const screenTrack = await AgoraRTC.createScreenVideoTrack(
+        {
+          encoderConfig: "1080p_1",
+        },
+        "auto", // "auto" | "disable" — whether to also capture system audio if the browser offers it
+      );
+      // createScreenVideoTrack can return [videoTrack, audioTrack] if audio was included
+      const screenVideoTrack = Array.isArray(screenTrack)
+        ? screenTrack[0]
+        : screenTrack;
+      const screenAudioTrack = Array.isArray(screenTrack)
+        ? screenTrack[1]
+        : null;
+      // Unpublish the camera track (if any) so we don't have two video tracks live
+      const { video: cameraTrack } = localTracksRef.current;
+      if (cameraTrack) {
+        await clientRef.current?.unpublish([cameraTrack]);
+      }
+      await clientRef?.publish(
+        screenAudioTrack
+          ? [screenVideoTrack, screenAudioTrack]
+          : [screenVideoTrack],
+      );
+      screenTrackRef.current = {
+        video: screenVideoTrack,
+        audio: screenAudioTrack,
+      };
+      setIsScreenSharing(true);
+      screenVideoTrack.on("track-ended", () => {
+        stopScreenShare();
+      });
+    } catch (error) {
+      console.error("Screen share failed:", err);
+      // Most common cause: user cancelled the share picker — not a real error, skip toast
+      if (err.message !== "Permission denied") {
+        toast.error("Couldn't start screen sharing.");
+      }
+    }
+  }, [isScreenSharing]);
+
+  const stopScreenShare = useCallback(async () => {
+    const { video, audio } = screenTrackRef.current || {};
+    if (!video) return;
+
+    await clientRef.current?.unpublish(audio ? [video, audio] : [video]);
+    video.close();
+    audio?.close();
+    screenTrackRef.current = null;
+    setIsScreenSharing(false);
+
+    // Republish the camera track if the user still has video enabled
+    const { video: cameraTrack } = localTracksRef.current;
+    if (cameraTrack) {
+      await clientRef.current?.publish([cameraTrack]);
+    }
+  }, []);
 
   const join = useCallback(
     async (mediaPrefs = { audio: true, video: true }) => {
@@ -111,7 +173,11 @@ export const useAgoraClass = (classId) => {
     const { audio, video } = localTracksRef.current;
     audio?.close();
     video?.close();
+    screenTrackRef.current?.video?.close();
+    screenTrackRef.current?.audio?.close();
     localTracksRef.current = { audio: null, video: null };
+    screenTrackRef.current = null;
+    setIsScreenSharing(false);
     await clientRef.current?.leave();
     setRemoteUsers([]);
     setStatus("idle");
@@ -127,5 +193,8 @@ export const useAgoraClass = (classId) => {
     leave,
     toggleAudio,
     toggleVideo,
+    isScreenSharing,
+    startScreenShare,
+    stopScreenShare,
   };
 };

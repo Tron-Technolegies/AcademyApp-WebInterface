@@ -5,6 +5,7 @@ import { Mic, MicOff, Video, VideoOff } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEndClass } from "../../../hooks/class/useClass";
+import useFullScreen from "../../../hooks/class/useFullScreen";
 
 export default function LiveClassRoom() {
   const { classId } = useParams();
@@ -20,10 +21,16 @@ export default function LiveClassRoom() {
     leave,
     toggleAudio,
     toggleVideo,
+    isScreenSharing,
+    startScreenShare,
+    stopScreenShare,
   } = useAgoraClass(classId);
   const [audioOn, setAudioOn] = useState(true);
   const [videoOn, setVideoOn] = useState(true);
   const localVideoRef = useRef(null);
+  const roomContainerRef = useRef(null);
+
+  const { isFullscreen, toggleFullScreen } = useFullScreen(roomContainerRef);
 
   useEffect(() => {
     if (localVideoTrack && localVideoRef.current) {
@@ -53,6 +60,10 @@ export default function LiveClassRoom() {
     setVideoOn((v) => !v);
   };
 
+  const handleToggleScreenShare = () => {
+    isScreenSharing ? stopScreenShare() : startScreenShare();
+  };
+
   if (status === "idle") {
     return <PreJoinSetup onJoin={handleJoin} />;
   }
@@ -75,7 +86,7 @@ export default function LiveClassRoom() {
     );
   }
   return (
-    <div>
+    <div className="bg-white p-4" ref={roomContainerRef}>
       <div className="grid grid-cols-2 gap-4">
         <div className="relative aspect-video bg-black rounded overflow-hidden">
           {videoOn ? (
@@ -84,6 +95,11 @@ export default function LiveClassRoom() {
             <div className="w-full h-full flex items-center justify-center text-gray-500">
               <VideoOff size={32} />
             </div>
+          )}
+          {isScreenSharing && (
+            <span className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
+              Sharing screen
+            </span>
           )}
         </div>
         {remoteUsers.map((user) => (
@@ -111,6 +127,15 @@ export default function LiveClassRoom() {
               End Class
             </button>
           )}
+          <button
+            onClick={handleToggleScreenShare}
+            className={`p-2 rounded border ${isScreenSharing ? "bg-blue-50 border-blue-500 text-blue-700" : ""}`}
+          >
+            {isScreenSharing ? <MonitorX size={18} /> : <MonitorUp size={18} />}
+          </button>
+          <button onClick={toggleFullscreen} className="p-2 rounded border">
+            {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+          </button>
           <button
             onClick={leave}
             className=" px-4 py-2 rounded bg-red-600 text-white"
