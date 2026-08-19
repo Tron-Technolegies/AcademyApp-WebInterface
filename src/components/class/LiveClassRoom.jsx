@@ -142,7 +142,7 @@ export default function LiveClassRoom() {
           >
             {isScreenSharing ? <MonitorX size={18} /> : <MonitorUp size={18} />}
           </button>
-          <button onClick={toggleFullscreen} className="p-2 rounded border">
+          <button onClick={toggleFullScreen} className="p-2 rounded border">
             {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
           </button>
           <button
