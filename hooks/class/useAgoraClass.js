@@ -34,7 +34,7 @@ export const useAgoraClass = (classId) => {
       if (cameraTrack) {
         await clientRef.current?.unpublish([cameraTrack]);
       }
-      await clientRef?.publish(
+      await clientRef?.current?.publish(
         screenAudioTrack
           ? [screenVideoTrack, screenAudioTrack]
           : [screenVideoTrack],
@@ -48,9 +48,9 @@ export const useAgoraClass = (classId) => {
         stopScreenShare();
       });
     } catch (error) {
-      console.error("Screen share failed:", err);
+      console.error("Screen share failed:", error);
       // Most common cause: user cancelled the share picker — not a real error, skip toast
-      if (err.message !== "Permission denied") {
+      if (error.message !== "Permission denied") {
         toast.error("Couldn't start screen sharing.");
       }
     }
